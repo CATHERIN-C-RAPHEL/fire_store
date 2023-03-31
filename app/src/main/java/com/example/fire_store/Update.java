@@ -24,9 +24,10 @@ import java.util.Map;
 
 public class Update extends AppCompatActivity {
     EditText t1,t2;
-    Button bn1;
+    Button bn1,bn2;
     FirebaseFirestore fb;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +36,17 @@ public class Update extends AppCompatActivity {
         t1 = findViewById(R.id.t1);
         t2 = findViewById(R.id.t2);
         bn1 = findViewById(R.id.bn1);
+        bn2 = findViewById(R.id.bn2);
         fb = FirebaseFirestore.getInstance();
+
+        bn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = t1.getText().toString().trim();
+                t1.setText("");
+                DeleteData(name);
+            }
+        });
 
         bn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +56,32 @@ public class Update extends AppCompatActivity {
                 t1.setText("");
                 t2.setText("");
                 UpdateData(name,rename);
+            }
+        });
+    }
+
+    private void DeleteData(String name) {
+
+        fb.collection("students").whereEqualTo("name",name).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()&& ! task.getResult().isEmpty()){
+                    DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                    String documentID = documentSnapshot.getId();
+
+                    fb.collection("students").document(documentID).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(Update.this, "deleted", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(Update.this, "failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    startActivity(new Intent(Update.this,Read_data.class));
+                }
             }
         });
     }

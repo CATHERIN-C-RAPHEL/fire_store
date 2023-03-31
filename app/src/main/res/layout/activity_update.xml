@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="156dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Existing value"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,8 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Change"
+        android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="@+id/t1"
         app:layout_constraintTop_toBottomOf="@+id/t1" />
 
@@ -38,4 +38,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/t2" />
+
+    <Button
+        android:id="@+id/bn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="19dp"
+        android:text="Delete"
+        app:layout_constraintStart_toStartOf="@+id/bn1"
+        app:layout_constraintTop_toBottomOf="@+id/bn1" />
 </androidx.constraintlayout.widget.ConstraintLayout>
